@@ -1,15 +1,17 @@
+from collections import Counter
+
 from feature.api import FeatureExtractorI
 from utility import tokenize
 
 
 class BagOfWordsUnited(FeatureExtractorI):
-    def __init__(self, train_sample):
-        self.token_set = set()
+    def __init__(self, train_sample, at_most=600):
+        cnt = Counter()
         for _, given_features, _ in train_sample:
-            self.token_set |= set(tokenize(given_features['title']))
-            self.token_set |= set(tokenize(given_features['description']))
+            cnt[given_features['title']] += 1
+            cnt[given_features['description']] += 1
 
-        self.attributes = dict([(x, 'numeric') for x in self.token_set])
+        self.attributes = dict([(x, 'numeric') for x in cnt.most_common(at_most)])
 
     def extract(self, data):
         tokens = tokenize(data['title'])
