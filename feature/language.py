@@ -1,6 +1,6 @@
-from api import FeatureExtractorI
-
 import langid
+
+from api import FeatureExtractorI
 
 
 class LangID(FeatureExtractorI):
