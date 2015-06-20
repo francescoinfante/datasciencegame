@@ -8,6 +8,8 @@ from hascaption import HasCaption
 from is3d import Is3D
 from ishd import IsHD
 from islicensed import IsLicensed
+from exactduration import ExactDuration
+from counterfit import CounterFit
 
 def extract_features(plugins, sample):
     result = []
