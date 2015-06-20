@@ -9,3 +9,4 @@ class IsHD(FeatureExtractorI):
     def extract(self, data):
         if data["definition"] == "hd":
             return {'ishd': 1}
+        return {}

@@ -9,3 +9,4 @@ class HasCaption(FeatureExtractorI):
     def extract(self, data):
         if data["caption"]:
             return {'caption': 1}
+        return {}

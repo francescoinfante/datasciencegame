@@ -9,3 +9,4 @@ class IsLicensed(FeatureExtractorI):
     def extract(self, data):
         if data["licensedContent"]:
             return {'islicensed': 1}
+        return {}

@@ -9,3 +9,4 @@ class Is3D(FeatureExtractorI):
     def extract(self, data):
         if data["dimension"] == "3d":
             return {'is3d': 1}
+        return {}
