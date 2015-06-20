@@ -4,6 +4,7 @@ import logging
 from os.path import join
 from os.path import dirname
 from sklearn import cross_validation, svm, naive_bayes
+from sklearn.preprocessing import scale
 
 from utility.arfftoscikit import get_vector_from
 
@@ -18,7 +19,7 @@ def do_not_call_it():
     naive_bayes.GaussianNB()
 
 
-def main(train_set, test_set, output_file, validate=False, k=5):
+def main(train_set, test_set, output_file, validate=False, k=5, normalise=True):
     executor_calls = []
     with open('input/classifier.cfg') as f:
         for executer in f:
@@ -40,6 +41,14 @@ def main(train_set, test_set, output_file, validate=False, k=5):
     print 'Reading test set...'
     with open(test_set, 'r') as f:
         (ids, test_features, _) = get_vector_from(f)
+
+    """
+    Normalizing data
+    """
+    if normalise:
+        print 'Normalising data...'
+        train_features = scale(train_features)
+        test_features = scale(test_features)
 
     if validate:
         print 'Validating...'
@@ -74,6 +83,9 @@ if __name__ == '__main__':
                            help='output file (csv)')
     argparser.add_argument('-k', '--k-folds', default=5,
                            help='number of folds in the k-folds cross validation')
+    argparser.add_argument('-n', '--normalise', default=True,
+                           help='whether to normalise the data')
     args = argparser.parse_args()
 
-    main(args.train_input, args.test_input, args.output, validate=args.validate, k=args.k_folds)
+    main(args.train_input, args.test_input, args.output, validate=args.validate, k=args.k_folds,
+         normalise=args.normalise)
