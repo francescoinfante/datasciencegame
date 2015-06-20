@@ -30,6 +30,9 @@ def array_to_dict(row, array):
     if test not in ['false', 'true']:
         logging.warn('licensedContent not valid for ' + str(row))
 
+    topicIds = set(array[13].split(';')) - {''}
+    relevantTopicIds = set(array[14].split(';')) - {''}
+
     try:
         dict = {
             "title": array[0],
@@ -46,8 +49,8 @@ def array_to_dict(row, array):
             "definition": array[10],
             "caption": array[11].lower() == 'true',
             "licensedContent": array[12].lower() == 'true',
-            "topicIds": array[13].split(';'),
-            "relevantTopicIds": array[14].split(';'),
+            "topicIds": topicIds,
+            "relevantTopicIds": relevantTopicIds,
         }
     except:
         raise Warning('Parse error on row ' + str(row))
