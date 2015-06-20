@@ -2,18 +2,20 @@ from itertools import count
 
 from progressbar import ProgressBar
 
+from bagofwordsofdescription import BagOfWordsOfDescription
+from bagofwordsoftitle import BagOfWordsOfTitle
+from bagofwordsunited import BagOfWordsUnited
 from containsrelevanttopic import ContainsRelevantTopic
 from containstopic import ContainsTopic
 from containstopicunited import ContainsTopicUnited
+from counterfit import CounterFit
+from exactduration import ExactDuration
 from hascaption import HasCaption
 from is3d import Is3D
 from ishd import IsHD
 from islicensed import IsLicensed
-from exactduration import ExactDuration
-from counterfit import CounterFit
-from bagofwordsoftitle import BagOfWordsOfTitle
-from bagofwordsofdescription import BagOfWordsOfDescription
 from publisheddate import PublishedDate
+
 
 def extract_features(plugins, sample):
     result = []

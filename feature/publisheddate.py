@@ -1,6 +1,6 @@
-from api import FeatureExtractorI
-from datetime import timedelta
 from dateutil.relativedelta import relativedelta
+
+from api import FeatureExtractorI
 
 
 class PublishedDate(FeatureExtractorI):
@@ -9,7 +9,7 @@ class PublishedDate(FeatureExtractorI):
             'monthly': 'numeric',
             'quarterly': 'numeric',
             'annually': 'numeric',
-            #'biannually': 'numeric',
+            # 'biannually': 'numeric',
             'seconds': 'numeric'
         }
 
@@ -21,6 +21,7 @@ class PublishedDate(FeatureExtractorI):
             'monthly': first_of_month.strftime('%s'),
             'quarterly': (first_of_month - relativedelta(month=(first_of_month.month - 1) / 3 * 3 + 1)).strftime('%s'),
             'annually': firs_of_year.strftime('%s'),
-            'biannually': (firs_of_year if firs_of_year.year % 2 else firs_of_year - relativedelta(years=1)).strftime('%s'),
+            'biannually': (firs_of_year if firs_of_year.year % 2 else firs_of_year - relativedelta(years=1)).strftime(
+                '%s'),
             'seconds': pub_date.strftime('%s'),
         }

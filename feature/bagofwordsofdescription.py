@@ -1,8 +1,6 @@
-from api import FeatureExtractorI
-from collections import Counter
-from nltk.stem.snowball import SnowballStemmer
-from nltk.parse import stanford
 from feature.api import FeatureExtractorI
+from utility import tokenize
+
 
 class BagOfWordsOfDescription(FeatureExtractorI):
     def __init__(self, train_sample):
@@ -15,5 +13,8 @@ class BagOfWordsOfDescription(FeatureExtractorI):
     def extract(self, data):
         tokens = tokenize(data['description'])
 
-        return dict(Counter(tokens))
+        res = {}
+        for x in tokens:
+            res[x] = 1
 
+        return res
