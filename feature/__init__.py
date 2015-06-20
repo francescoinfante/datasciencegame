@@ -4,6 +4,7 @@ from progressbar import ProgressBar
 
 from containsrelevanttopic import ContainsRelevantTopic
 from containstopic import ContainsTopic
+from containstopicunited import ContainsTopicUnited
 from hascaption import HasCaption
 from is3d import Is3D
 from ishd import IsHD
