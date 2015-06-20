@@ -14,7 +14,7 @@ DEFAULT_TRAINING_INPUT = 'input/train_sample.csv'
 DEFAULT_TEST_INPUT = 'input/test_sample.csv'
 DEFAULT_TRAINING_OUTPUT = 'output/output_train.arff'
 DEFAULT_TEST_OUTPUT = 'output/output_test.arff'
-DEFAULT_CONFIGURATION = 'input/configure.cfg'
+DEFAULT_CONFIGURATION = 'configure.cfg'
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
