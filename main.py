@@ -1,8 +1,6 @@
 import logging
 import csv
-import random
 
-from unidecode import unidecode
 from utility import array_to_dict
 
 DEFAULT_TRAINING_INPUT = '../input/train_sample.csv'
@@ -24,11 +22,13 @@ if __name__ == '__main__':
 
     with open(DEFAULT_TRAINING_INPUT, 'r') as f:
         f.next()
-        csv_reader = csv.reader(f, delimiter=';', quotechar='"')
+        csv_reader = csv.reader(f, delimiter=',', quotechar='"')
         for row in csv_reader:
             category = row[0]
             possible_categories.add(category)
-            train_sample.append(('0', array_to_dict(row[1:], category)))
+            if category == '':
+                print "hello"
+            train_sample.append(('0', array_to_dict(row[1:]), category))
 
     """
     Test Sample CSV header
@@ -39,9 +39,9 @@ if __name__ == '__main__':
 
     with open(DEFAULT_TEST_INPUT, 'r') as f:
         f.next()
-        csv_reader = csv.reader(f, delimiter=';', quotechar='"')
+        csv_reader = csv.reader(f, delimiter=',', quotechar='"')
         for row in csv_reader:
             test_id = row[0]
+            test_sample.append((test_id, array_to_dict(row[1:]), '0'))
 
-            text = unidecode(unicode(row[1], 'utf-8')).strip()
-            test_sample.append(('0', array_to_dict(row[1:], random.choice(list(possible_categories)))))
+    print possible_categories
