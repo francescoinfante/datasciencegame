@@ -2,6 +2,7 @@ from itertools import count
 
 from progressbar import ProgressBar
 
+from examplefeature import ExampleFeature
 
 def extract_features(plugins, sample):
     result = []

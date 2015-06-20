@@ -11,6 +11,8 @@ from utility import array_to_dict
 
 DEFAULT_TRAINING_INPUT = 'input/train_sample.csv'
 DEFAULT_TEST_INPUT = 'input/test_sample.csv'
+DEFAULT_TRAINING_OUTPUT = 'output/output_train.arff'
+DEFAULT_TEST_OUTPUT = 'output/output_test.arff'
 DEFAULT_CONFIGURATION = 'input/configure.cfg'
 
 if __name__ == '__main__':
@@ -21,6 +23,10 @@ if __name__ == '__main__':
                            help='training input file (csv format)')
     argparser.add_argument('-i2', '--test-input', default=DEFAULT_TEST_INPUT,
                            help='test input file (csv format)')
+    argparser.add_argument('-o1', '--training-output', default=DEFAULT_TRAINING_OUTPUT,
+                           help='training output file (arff sparse format)')
+    argparser.add_argument('-o2', '--test-output', default=DEFAULT_TEST_OUTPUT,
+                           help='test output file (arff sparse format)')
     argparser.add_argument('-c', '--configuration', default=DEFAULT_CONFIGURATION,
                            help='configuration file')
     args = argparser.parse_args()
