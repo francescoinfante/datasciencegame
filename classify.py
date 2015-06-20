@@ -19,7 +19,7 @@ def do_not_call_it():
 
 def main(train_set, test_set, output_file, validate=False, k=5):
     executor_calls = []
-    with open('classifier.cfg') as f:
+    with open('input/classifier.cfg') as f:
         for executer in f:
             executer = executer.rstrip().lstrip()
             if executer and not executer.startswith('#'):
