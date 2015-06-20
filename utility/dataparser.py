@@ -10,7 +10,7 @@ def array_to_dict(row, array):
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
     if len(array) != 15:
-        raise Warning('Too many fiels in row: ' + str(row))
+        raise Warning('Number of fields of row ' + str(row) + ' is ' + str(len(array)))
 
     try:
         dict = {

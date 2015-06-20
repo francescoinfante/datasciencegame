@@ -43,7 +43,7 @@ if __name__ == '__main__':
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
-    row_count = count(1)
+    row_count = count(2)
 
     with open(args.training_input, 'r') as f:
         f.next()
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
-    row_count = count(1)
+    row_count = count(2)
 
     with open(args.test_input, 'r') as f:
         f.next()
