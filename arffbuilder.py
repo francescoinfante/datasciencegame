@@ -16,13 +16,13 @@ def arff_sparse_builder(file_name, relation_name, attributes, data):
     code_list.append(('id', counter.next()))
 
     for f_name, f_type in sorted(attributes.items()):
-        if f_name in ['id', 'class']:
+        if f_name in ['id', 'video_category_id']:
             continue
         out.write('@ATTRIBUTE ' + f_name + ' ' + f_type + '\n')
         code_list.append((f_name, counter.next()))
 
-    out.write('@ATTRIBUTE ' + 'class' + ' ' + attributes['class'] + '\n')  # class last
-    code_list.append(('class', counter.next()))
+    out.write('@ATTRIBUTE ' + 'video_category_id' + ' ' + attributes['video_category_id'] + '\n')  # class last
+    code_list.append(('video_category_id', counter.next()))
 
     out.write('@DATA\n')
 

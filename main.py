@@ -7,6 +7,8 @@ from progressbar import ProgressBar
 import feature
 from arffbuilder import arff_sparse_builder
 
+import random
+
 from utility import array_to_dict
 
 DEFAULT_TRAINING_INPUT = 'input/train_sample.csv'
@@ -62,7 +64,7 @@ if __name__ == '__main__':
         csv_reader = csv.reader(f, delimiter=',', quotechar='"')
         for row in csv_reader:
             test_id = row[0]
-            test_sample.append((test_id, array_to_dict(row[1:]), '0'))
+            test_sample.append((test_id, array_to_dict(row[1:]), random.choice(list(possible_categories))))
 
     """
     Call init for each plugin in the configuration file

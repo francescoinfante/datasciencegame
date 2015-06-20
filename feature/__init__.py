@@ -4,13 +4,14 @@ from progressbar import ProgressBar
 
 from examplefeature import ExampleFeature
 
+
 def extract_features(plugins, sample):
     result = []
 
     progressbar, progressbar_counter = ProgressBar(maxval=len(sample)).start(), count(1)
 
     for s in sample:
-        feature_vector = dict([('id', s[0]), ('class', s[2])])
+        feature_vector = dict([('id', s[0]), ('video_category_id', s[2])])
         for x in plugins:
             prefix = x.__class__.__name__
             feature_vector.update({prefix + ':' + str(feat_name): feat_value
@@ -24,7 +25,7 @@ def extract_features(plugins, sample):
 
 
 def get_attributes(plugins, possible_classes):
-    attr = dict([('id', 'numeric'), ('class', '{' + ','.join(possible_classes) + '}')])
+    attr = dict([('id', 'numeric'), ('video_category_id', '{' + ','.join(possible_classes) + '}')])
 
     for x in plugins:
         prefix = x.__class__.__name__
