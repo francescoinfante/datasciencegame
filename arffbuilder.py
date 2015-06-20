@@ -28,11 +28,14 @@ def arff_sparse_builder(file_name, relation_name, attributes, data):
 
     progressbar, progressbar_counter = ProgressBar(maxval=len(data)).start(), count(1)
 
+    code_list = dict(code_list)
+
     for line in data:
         res = []
-        for f_name, f_code in code_list:
-            if f_name in line:
-                res.append((f_code, line[f_name]))
+
+        for f_name in line:
+            if f_name in code_list:
+                res.append((code_list[f_name], line[f_name]))
 
         out.write('{' + ','.join([str(x) + ' ' + str(y) for x, y in res]) + '}\n')
 
