@@ -12,7 +12,7 @@ class ContainsTopicUnited(FeatureExtractorI):
             for key in given_features['relevantTopicIds']:
                 cnt[key] += 1
         self.attributes = {key: 'numeric' for (key, value) in cnt.iteritems() if value >= min_freq}
-        print "Number of topics: " + len(self.attributes)
+        print "Number of topics: " + str(len(self.attributes))
 
     def extract(self, data):
         return {key: '1' for key in data['topicIds'] | data['relevantTopicIds']}
