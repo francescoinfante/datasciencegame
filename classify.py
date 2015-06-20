@@ -3,7 +3,6 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-
 from sklearn import cross_validation, svm, naive_bayes
 
 from utility.arfftoscikit import get_vector_from
@@ -33,22 +32,28 @@ def main(train_set, test_set, output_file, validate=False, k=5):
         logging.error('Not a single classifier is specified')
         exit()
 
+    print 'Reading training set...'
     with open(train_set, 'r') as f:
         (_, train_features, classes) = get_vector_from(f)
 
+    print 'Reading test set...'
     with open(test_set, 'r') as f:
         (ids, test_features, _) = get_vector_from(f)
 
     if validate:
+        print 'Validating...'
         eval_clf = eval(executor_calls[0])
         cv = cross_validation.cross_val_score(eval_clf, train_features, classes, cv=k)
-        print 'Accuracy: %f' % cv.mean
+        print 'Accuracy: %f' % cv.mean()
 
+    print 'Training classifier...'
     clf = eval(executor_calls[0])
     clf.fit(train_features, classes)
 
+    print 'Computing predictions...'
     predictions = zip(ids, clf.predict(test_features))
 
+    print 'Writing results...'
     with open(output_file, 'w') as f:
         f.write('id;video_category_id\n')
         csv_writer = csv.writer(f, delimiter=';')

@@ -32,7 +32,7 @@ def get_vector_from(arff_file_stream):
         cur_class = v[-1][1]
         classes.append(int(cur_class))
         for (j, value) in v[1:-1]:
-            matrix[(i, j)] = int(value)
+            matrix[(i, j)] = value
         i += 1
 
     return np.array(ids), matrix, np.array(classes)
