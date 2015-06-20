@@ -18,10 +18,12 @@ class PublishedDate(FeatureExtractorI):
         first_of_month = pub_date - relativedelta(days=data["published_at"].day - 1)
         firs_of_year = first_of_month - relativedelta(months=first_of_month.month - 1)
         return {
-            'monthly': first_of_month.strftime('%s'),
-            'quarterly': (first_of_month - relativedelta(month=(first_of_month.month - 1) / 3 * 3 + 1)).strftime('%s'),
-            'annually': firs_of_year.strftime('%s'),
-            'biannually': (firs_of_year if firs_of_year.year % 2 else firs_of_year - relativedelta(years=1)).strftime(
-                '%s'),
-            'seconds': pub_date.strftime('%s'),
+            'monthly': int(first_of_month.strftime('%s')) / 86400,
+            'quarterly': int(
+                (first_of_month - relativedelta(month=(first_of_month.month - 1) / 3 * 3 + 1)).strftime('%s')) / 86400,
+            'annually': int(firs_of_year.strftime('%s')) / 86400,
+            'biannually': int(
+                (firs_of_year if firs_of_year.year % 2 else firs_of_year - relativedelta(years=1)).strftime(
+                    '%s')) / 86400,
+            'seconds': int(data["published_at"].strftime('%s')) / 86400,
         }
