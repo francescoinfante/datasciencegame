@@ -1,9 +1,10 @@
 from argparse import ArgumentParser
 import csv
 import logging
-from sklearn import svm, cross_validation
 from os.path import join
 from os.path import dirname
+
+from sklearn import cross_validation
 
 from utility.arfftoscikit import get_vector_from
 
@@ -44,6 +45,8 @@ def main(train_set, test_set, output_file, validate=False, k=5):
     predictions = zip(ids, clf.predict(test_features))
 
     with open(output_file, 'w') as f:
+        f.write('id;video_category_id\n')
+
         csv_writer = csv.writer(f)
         for (instance_id, prediction) in sorted(predictions):
             csv_writer.writerow([instance_id, prediction])
