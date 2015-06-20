@@ -1,14 +1,13 @@
 import logging
-import csv
 from argparse import ArgumentParser
 import random
+from itertools import count
 
+import unicodecsv
 from progressbar import ProgressBar
 
 import feature
 from arffbuilder import arff_sparse_builder
-from utility import unidecode_stream
-
 from utility import array_to_dict
 
 DEFAULT_TRAINING_INPUT = 'input/train_sample.csv'
@@ -44,27 +43,40 @@ if __name__ == '__main__':
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
+    row_count = count(1)
+
     with open(args.training_input, 'r') as f:
         f.next()
-        csv_reader = csv.reader(unidecode_stream(f), delimiter=',', quotechar='"')
+        csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
         for row in csv_reader:
             category = row[0]
             possible_categories.add(category)
-            train_sample.append(('0', array_to_dict(row[1:]), category))
+            try:
+                train_sample.append(('0', array_to_dict(row_count.next(), row[1:]), category))
+            except Exception as e:
+                logging.warn('Warning from training set')
+                logging.warn(e)
 
     """
     Test Sample CSV header
 
-    id,"title","title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
+    "id","title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
+    row_count = count(1)
+
     with open(args.test_input, 'r') as f:
         f.next()
-        csv_reader = csv.reader(unidecode_stream(f), delimiter=',', quotechar='"')
+        csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
         for row in csv_reader:
             test_id = row[0]
-            test_sample.append((test_id, array_to_dict(row[1:]), random.choice(list(possible_categories))))
+            try:
+                test_sample.append(
+                    (test_id, array_to_dict(row_count.next(), row[1:]), random.choice(list(possible_categories))))
+            except Exception as e:
+                logging.warn('Warning from test set')
+                logging.warn(e)
 
     """
     Call init for each plugin in the configuration file
