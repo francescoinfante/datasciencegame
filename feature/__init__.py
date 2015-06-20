@@ -17,6 +17,7 @@ from islicensed import IsLicensed
 #from language import LangID
 from publisheddate import PublishedDate
 from rangeclassify import RangeClassify
+from publisheddatecyclic import PublishedDateCyclic
 
 
 def extract_features(plugins, sample):
