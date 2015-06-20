@@ -4,7 +4,7 @@ from nltk import SnowballStemmer
 
 from nltk.corpus import stopwords
 
-stopwords_en = stopwords('english')
+stopwords_en = stopwords.words('english')
 stemmer = SnowballStemmer('english')
 
 
