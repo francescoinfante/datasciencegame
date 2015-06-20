@@ -4,12 +4,14 @@ import logging
 from os.path import join
 from os.path import dirname
 from sklearn import cross_validation, svm, naive_bayes
+from sklearn.feature_selection import SelectKBest, chi2
 
 from utility.arfftoscikit import get_vector_from
 
 DEFAULT_OUTPUT = join(dirname(__file__), 'output/result-scikit.csv')
 DEFAULT_TRAIN_SET = join(dirname(__file__), 'output/output_train.arff')
 DEFAULT_TEST_SET = join(dirname(__file__), 'output/output_test.arff')
+DEFAULT_FEATURES_RANKING = join(dirname(__file__), 'output/features_ranking.csv')
 
 logging.basicConfig()
 LOGGER = logging.getLogger('Classify')
@@ -22,7 +24,7 @@ def do_not_call_it():
     naive_bayes.GaussianNB()
 
 
-def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=-1):
+def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=0):
     """
 
     :param train_set:
@@ -57,17 +59,26 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
 
     LOGGER.info('Reading training set...')
     with open(train_set, 'r') as f:
-        (_, train_features, classes) = get_vector_from(f)
+        (_, train_features, classes, features_names) = get_vector_from(f)
 
     LOGGER.info('Reading test set...')
     with open(test_set, 'r') as f:
-        (ids, test_features, _) = get_vector_from(f)
+        (ids, test_features, _, _) = get_vector_from(f)
 
     """
     Feature selection
     """
 
-    # features_ranker = SelectKBest(chi2, k=2).fit(train_features, classes)
+    if num_of_features > 0:
+        features_ranker = SelectKBest(chi2, k=num_of_features).fit(train_features, classes)
+        features_ranker.transform(train_features)
+        features_ranker.transform(test_features)
+
+        with open(DEFAULT_FEATURES_RANKING, 'w') as f:
+            csv_writer = csv.writer(f, delimiter=';')
+            scores = zip(features_ranker.scores_, features_names)
+            for (score, name) in sorted(scores, reverse=True):
+                csv_writer.writerow([name, score])
 
     """
     Validation
@@ -118,8 +129,8 @@ if __name__ == '__main__':
                            help='output file (csv)')
     argparser.add_argument('-k', '--k-folds', default=5,
                            help='number of folds in the k-folds cross validation')
-    argparser.add_argument('-n', '--num-of-features', default=False,
-                           help='whether to normalise the data')
+    argparser.add_argument('-n', '--num-of-features', default=0, type=int,
+                           help='number of features to use')
     args = argparser.parse_args()
 
     main(args.train_input, args.test_input, args.output, validate=args.validate, k=args.k_folds,
