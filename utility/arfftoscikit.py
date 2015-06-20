@@ -1,3 +1,4 @@
+from collections import Counter
 import scipy.sparse as sps
 import numpy as np
 
@@ -26,13 +27,22 @@ def get_vector_from(arff_file_stream):
     classes = []
     ids = []
     i = 0
+    nominal_mappings = {}
+    nominal_counter = Counter()
     for instance in instances:
         v = [(int(j) - 1, value) for (j, value) in map(lambda x: x.split(' '), instance.split(','))]
         ids.append(int(v[0][1]))
         cur_class = v[-1][1]
         classes.append(int(cur_class))
         for (j, value) in v[1:-1]:
-            matrix[(i, j)] = value
+            if value.isdigit():
+                matrix[(i, j)] = int(value)
+            else:
+                if (j, value) not in nominal_mappings:
+                    nominal_mappings[(j, value)] = nominal_counter[j]
+                    nominal_counter[j] += 1
+                matrix[(i, j)] = nominal_mappings[(j, value)]
+
         i += 1
 
     return np.array(ids), matrix, np.array(classes)

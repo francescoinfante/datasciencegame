@@ -15,6 +15,7 @@ DEFAULT_TEST_SET = join(dirname(__file__), 'output/output_test.arff')
 def do_not_call_it():
     svm.LinearSVC()
     naive_bayes.MultinomialNB()
+    naive_bayes.GaussianNB()
 
 
 def main(train_set, test_set, output_file, validate=False, k=5):
