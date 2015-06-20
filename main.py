@@ -1,13 +1,13 @@
 import logging
 import csv
 from argparse import ArgumentParser
+import random
 
 from progressbar import ProgressBar
 
 import feature
 from arffbuilder import arff_sparse_builder
-
-import random
+from utility import unidecode_stream
 
 from utility import array_to_dict
 
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     with open(args.training_input, 'r') as f:
         f.next()
-        csv_reader = csv.reader(f, delimiter=',', quotechar='"')
+        csv_reader = csv.reader(unidecode_stream(f), delimiter=',', quotechar='"')
         for row in csv_reader:
             category = row[0]
             possible_categories.add(category)
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     with open(args.test_input, 'r') as f:
         f.next()
-        csv_reader = csv.reader(f, delimiter=',', quotechar='"')
+        csv_reader = csv.reader(unidecode_stream(f), delimiter=',', quotechar='"')
         for row in csv_reader:
             test_id = row[0]
             test_sample.append((test_id, array_to_dict(row[1:]), random.choice(list(possible_categories))))
