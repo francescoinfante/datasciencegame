@@ -10,8 +10,9 @@ def array_to_dict(row, array):
     "title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
-    if len(array) != 15
+    if len(array) != 15:
         raise Warning('Too many fiels in row: ' + row)
+
     try:
         dict = {
             "title": array[0],
