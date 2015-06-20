@@ -10,6 +10,7 @@ from ishd import IsHD
 from islicensed import IsLicensed
 from exactduration import ExactDuration
 from counterfit import CounterFit
+from bagofwordsoftitle import BagOfWordsOfTitle
 
 def extract_features(plugins, sample):
     result = []
