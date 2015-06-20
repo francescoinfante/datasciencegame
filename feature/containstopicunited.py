@@ -4,7 +4,7 @@ from api import FeatureExtractorI
 
 
 class ContainsTopicUnited(FeatureExtractorI):
-    def __init__(self, train_sample, at_most=500):
+    def __init__(self, train_sample, at_most=1000):
         cnt = Counter()
         for (_, given_features, _) in train_sample:
             for key in given_features['topicIds'] | given_features['relevantTopicIds']:

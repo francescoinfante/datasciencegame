@@ -4,7 +4,7 @@ from api import FeatureExtractorI
 
 
 class ContainsTopic(FeatureExtractorI):
-    def __init__(self, train_sample, at_most=200):
+    def __init__(self, train_sample, at_most=500):
         cnt = Counter()
         for (_, given_features, _) in train_sample:
             for key in given_features['topicIds']:
