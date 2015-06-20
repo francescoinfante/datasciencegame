@@ -33,4 +33,4 @@ class BeautifulTopic(FeatureExtractorI):
         for x in topics:
             result[self.cache[x[2:]]] = 1
 
-        return resultBeaubb
+        return result
