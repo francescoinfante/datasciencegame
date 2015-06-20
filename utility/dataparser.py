@@ -10,6 +10,8 @@ def array_to_dict(row, array):
     "title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
+    if len(array) != 15
+        raise Warning('Too many fiels in row: ' + row)
     try:
         dict = {
             "title": array[0],
@@ -26,8 +28,8 @@ def array_to_dict(row, array):
             "caption": array[11].lower() in ['true', '1'],
             "licensedContent": array[12].lower() in ['true', '1'],
             "topicIds": array[13].split(';'),
-            "relevantTopicIds": array[13].split(';'),
+            "relevantTopicIds": array[14].split(';'),
         }
     except:
-        raise Warning('Warning on row ' + row)
+        raise Warning('Parse error on row ' + row)
     return dict
