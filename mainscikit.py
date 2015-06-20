@@ -3,7 +3,6 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-
 from sklearn import cross_validation
 
 from utility.arfftoscikit import get_vector_from
@@ -64,8 +63,6 @@ if __name__ == '__main__':
                            help='output file (csv)')
     argparser.add_argument('-k', '--k-folds', default=5,
                            help='number of folds in the k-folds cross validation')
-    argparser.add_argument('-c', default=None,
-                           help='C parameter of SVM')
     args = argparser.parse_args()
 
-    main(args.train_input, args.test_input, args.output, validate=args.validate, k=args.k_folds, c=args.c)
+    main(args.train_input, args.test_input, args.output, validate=args.validate, k=args.k_folds)
