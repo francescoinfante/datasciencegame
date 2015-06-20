@@ -14,7 +14,7 @@ from hascaption import HasCaption
 from is3d import Is3D
 from ishd import IsHD
 from islicensed import IsLicensed
-from language import LangID
+#from language import LangID
 from publisheddate import PublishedDate
 from rangeclassify import RangeClassify
 
