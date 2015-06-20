@@ -1,3 +1,5 @@
+import logging
+
 import dateutil.parser
 import isodate
 
@@ -11,6 +13,14 @@ def array_to_dict(row, array):
     """
     if len(array) != 15:
         raise Warning('Number of fields of row ' + str(row) + ' is ' + str(len(array)))
+
+    test = array[11].lower()
+    if test not in ['false', 'true']:
+        logging.warn('caption not valid for ' + str(row))
+
+    test = array[12].lower()
+    if test not in ['false', 'true']:
+        logging.warn('licensedContent not valid for ' + str(row))
 
     try:
         dict = {
@@ -26,8 +36,8 @@ def array_to_dict(row, array):
                 array[8]).seconds,
             "dimension": array[9],
             "definition": array[10],
-            "caption": array[11].lower() in ['true', '1'],
-            "licensedContent": array[12].lower() in ['true', '1'],
+            "caption": array[11].lower() == 'true',
+            "licensedContent": array[12].lower() == 'true',
             "topicIds": array[13].split(';'),
             "relevantTopicIds": array[14].split(';'),
         }
