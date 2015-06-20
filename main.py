@@ -60,6 +60,8 @@ if __name__ == '__main__':
             row_count += 1
         progressbar.finish()
 
+    logging.info('Train sample has been read!')
+
     """
     Test Sample CSV header
 
@@ -85,6 +87,8 @@ if __name__ == '__main__':
             row_count += 1
         progressbar.finish()
 
+    logging.info('Test sample has been read!')
+
     """
     Call init for each plugin in the configuration file
     """
@@ -106,6 +110,8 @@ if __name__ == '__main__':
             plugins.append(eval(plugins_calls[i]))
             progressbar.update((i + 1) * len(train_sample))
         progressbar.finish()
+
+    logging.info('Plugins have been loaded!')
 
     """
     Get all the attributes from each plugin (dictionary key: 'plugin_name:attribute_name', value: 'attribute_type')
