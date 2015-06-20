@@ -16,7 +16,9 @@ def tokenize(data):
     res = []
 
     for x in data:
-        if x not in stopwords_en:
-            res.append(stemmer.stem(x))
+        if x not in stopwords_en and x.isalpha():
+            stemmed = stemmer.stem(x)
+            if len(stemmed) >= 3:
+                res.append(stemmed)
 
     return res
