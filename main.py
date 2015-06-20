@@ -1,7 +1,6 @@
 import logging
 from argparse import ArgumentParser
 import random
-from itertools import count
 
 import unicodecsv
 from progressbar import ProgressBar
@@ -43,19 +42,23 @@ if __name__ == '__main__':
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
-    row_count = count(2)
+    row_count = 2
 
     with open(args.training_input, 'r') as f:
         f.next()
         csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
+        progressbar = ProgressBar(maxval=240000).start()
         for row in csv_reader:
             category = row[0]
             possible_categories.add(category)
             try:
-                train_sample.append(('0', array_to_dict(row_count.next(), row[1:]), category))
+                train_sample.append(('0', array_to_dict(row_count, row[1:]), category))
             except Exception as e:
                 logging.warn('Warning from training set')
                 logging.warn(e)
+            progressbar.update(row_count)
+            row_count += 1
+        progressbar.finish()
 
     """
     Test Sample CSV header
@@ -64,19 +67,23 @@ if __name__ == '__main__':
     "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
     """
 
-    row_count = count(2)
+    row_count = 2
 
     with open(args.test_input, 'r') as f:
         f.next()
         csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
+        progressbar = ProgressBar(maxval=116000).start()
         for row in csv_reader:
             test_id = row[0]
             try:
                 test_sample.append(
-                    (test_id, array_to_dict(row_count.next(), row[1:]), random.choice(list(possible_categories))))
+                    (test_id, array_to_dict(row_count, row[1:]), random.choice(list(possible_categories))))
             except Exception as e:
                 logging.warn('Warning from test set')
                 logging.warn(e)
+            progressbar.update(row_count)
+            row_count += 1
+        progressbar.finish()
 
     """
     Call init for each plugin in the configuration file
