@@ -16,7 +16,7 @@ def tokenize(data):
     res = []
 
     for x in data:
-        if x not in stopwords:
+        if x not in stopwords_en:
             res.append(stemmer.stem(x))
 
     return res
