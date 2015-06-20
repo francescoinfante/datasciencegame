@@ -1,5 +1,5 @@
 from api import FeatureExtractorI
-import logging
+
 
 class Is3D(FeatureExtractorI):
     def __init__(self):

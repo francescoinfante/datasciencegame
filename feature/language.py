@@ -1,4 +1,3 @@
-"""
 import langid
 
 from api import FeatureExtractorI
@@ -15,4 +14,3 @@ class LangID(FeatureExtractorI):
     def extract(self, data):
         language = langid.classify(data['title'] + ' ' + data['description'])[0]
         return {'lang': language}
-"""

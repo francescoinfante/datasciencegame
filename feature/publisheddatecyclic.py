@@ -1,8 +1,8 @@
+import time
+
 from dateutil.relativedelta import relativedelta
 
 from api import FeatureExtractorI
-from datetime import datetime
-import time
 
 
 class PublishedDateCyclic(FeatureExtractorI):
