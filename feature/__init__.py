@@ -11,6 +11,7 @@ from islicensed import IsLicensed
 from exactduration import ExactDuration
 from counterfit import CounterFit
 from bagofwordsoftitle import BagOfWordsOfTitle
+from bagofwordsofdescription import BagOfWordsOfDescription
 
 def extract_features(plugins, sample):
     result = []
