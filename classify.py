@@ -3,6 +3,7 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
+
 from sklearn import cross_validation, svm
 
 from utility.arfftoscikit import get_vector_from
@@ -14,6 +15,7 @@ DEFAULT_TEST_SET = join(dirname(__file__), 'output/output_test.arff')
 
 def do_not_call_it():
     svm.LinearSVC()
+
 
 def main(train_set, test_set, output_file, validate=False, k=5):
     executer_calls = []
@@ -48,7 +50,7 @@ def main(train_set, test_set, output_file, validate=False, k=5):
 
     with open(output_file, 'w') as f:
         f.write('id;video_category_id\n')
-        csv_writer = csv.writer(f, separator=';')
+        csv_writer = csv.writer(f, delimiter=';')
         for (instance_id, prediction) in sorted(predictions):
             csv_writer.writerow([instance_id, prediction])
 
