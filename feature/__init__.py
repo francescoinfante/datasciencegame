@@ -2,7 +2,7 @@ from itertools import count
 
 from progressbar import ProgressBar
 
-from examplefeature import ExampleFeature
+from containsrelevanttopic import ContainsRelevantTopic
 from containstopic import ContainsTopic
 from hascaption import HasCaption
 from is3d import Is3D
