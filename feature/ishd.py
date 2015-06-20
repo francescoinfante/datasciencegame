@@ -9,6 +9,4 @@ class IsHD(FeatureExtractorI):
     def extract(self, data):
         if data["definition"] == "hd":
             return {'ishd': 1}
-        if data["definition"] != "sd":
-            logging.warn("definition different from hd or sd")
         return {}

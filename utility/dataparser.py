@@ -14,6 +14,14 @@ def array_to_dict(row, array):
     if len(array) != 15:
         raise Warning('Number of fields of row ' + str(row) + ' is ' + str(len(array)))
 
+    test = array[9].lower()
+    if test not in ['3d', '2d']:
+        logging.warn('dimension not valid for ' + str(row))
+
+    test = array[10].lower()
+    if test not in ['hd', 'sd']:
+        logging.warn('definition not valid for ' + str(row))
+
     test = array[11].lower()
     if test not in ['false', 'true']:
         logging.warn('caption not valid for ' + str(row))
@@ -21,6 +29,9 @@ def array_to_dict(row, array):
     test = array[12].lower()
     if test not in ['false', 'true']:
         logging.warn('licensedContent not valid for ' + str(row))
+
+    topicIds = set(array[13].split(';')) - {''}
+    relevantTopicIds = set(array[14].split(';')) - {''}
 
     try:
         dict = {
@@ -38,8 +49,8 @@ def array_to_dict(row, array):
             "definition": array[10],
             "caption": array[11].lower() == 'true',
             "licensedContent": array[12].lower() == 'true',
-            "topicIds": array[13].split(';'),
-            "relevantTopicIds": array[14].split(';'),
+            "topicIds": topicIds,
+            "relevantTopicIds": relevantTopicIds,
         }
     except:
         raise Warning('Parse error on row ' + str(row))
