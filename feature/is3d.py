@@ -1,5 +1,5 @@
 from api import FeatureExtractorI
-
+import logging
 
 class Is3D(FeatureExtractorI):
     def __init__(self):
@@ -9,4 +9,6 @@ class Is3D(FeatureExtractorI):
     def extract(self, data):
         if data["dimension"] == "3d":
             return {'is3d': 1}
+        if data["definition"] != "2d":
+            logging.warn("definition different from 3d or 2d")
         return {}
