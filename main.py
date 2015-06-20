@@ -4,6 +4,9 @@ from argparse import ArgumentParser
 
 from progressbar import ProgressBar
 
+import feature
+from arffbuilder import arff_sparse_builder
+
 from utility import array_to_dict
 
 DEFAULT_TRAINING_INPUT = 'input/train_sample.csv'
@@ -76,3 +79,24 @@ if __name__ == '__main__':
             plugins.append(eval(plugins_calls[i]))
             progressbar.update((i + 1) * len(train_sample))
         progressbar.finish()
+
+    """
+    Get all the attributes from each plugin (dictionary key: 'plugin_name:attribute_name', value: 'attribute_type')
+    """
+
+    attributes = feature.get_attributes(plugins, possible_categories)
+
+    """
+    Build actual arff files
+    """
+
+    train_data = feature.extract_features(plugins, train_sample)
+
+    arff_sparse_builder(args.training_output, 'train_set', attributes, train_data)
+
+    logging.info(args.training_output + ' is ready!')
+
+    test_data = feature.extract_features(plugins, test_sample)
+    arff_sparse_builder(args.test_output, 'test_set', attributes, test_data)
+
+    logging.info(args.test_output + ' is ready!')
