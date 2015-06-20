@@ -5,7 +5,7 @@ from utility import tokenize
 
 
 class BagOfWordsUnited(FeatureExtractorI):
-    def __init__(self, train_sample, at_most=600):
+    def __init__(self, train_sample, at_most=1000):
         cnt = Counter()
         for _, data, _ in train_sample:
             tokens = tokenize(data['title'] + ' ' + data['description'])
