@@ -4,6 +4,10 @@ from progressbar import ProgressBar
 
 from examplefeature import ExampleFeature
 from containstopic import ContainsTopic
+from hascaption import HasCaption
+from is3d import Is3D
+from ishd import IsHD
+from islicensed import IsLicensed
 
 def extract_features(plugins, sample):
     result = []
