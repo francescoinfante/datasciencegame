@@ -15,6 +15,7 @@ from is3d import Is3D
 from ishd import IsHD
 from islicensed import IsLicensed
 from publisheddate import PublishedDate
+from rangeduration import RangeDuration
 
 
 def extract_features(plugins, sample):
