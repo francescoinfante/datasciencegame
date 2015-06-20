@@ -3,7 +3,7 @@ from itertools import count
 from progressbar import ProgressBar
 
 from examplefeature import ExampleFeature
-
+from containstopic import ContainsTopic
 
 def extract_features(plugins, sample):
     result = []
