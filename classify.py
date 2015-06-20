@@ -3,8 +3,7 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-
-from sklearn import cross_validation, svm
+from sklearn import cross_validation, svm, naive_bayes
 
 from utility.arfftoscikit import get_vector_from
 
@@ -15,20 +14,21 @@ DEFAULT_TEST_SET = join(dirname(__file__), 'output/output_test.arff')
 
 def do_not_call_it():
     svm.LinearSVC()
+    naive_bayes.MultinomialNB()
 
 
 def main(train_set, test_set, output_file, validate=False, k=5):
-    executer_calls = []
+    executor_calls = []
     with open('classifier.cfg') as f:
         for executer in f:
             executer = executer.rstrip().lstrip()
             if executer and not executer.startswith('#'):
                 try:
-                    executer_calls.append(compile(executer, '<string>', 'eval'))
+                    executor_calls.append(compile(executer, '<string>', 'eval'))
                 except SyntaxError:
                     logging.error('Syntax error: ' + executer)
 
-    if len(executer_calls) != 1:
+    if len(executor_calls) != 1:
         logging.error('Not a single classifier is specified')
         exit()
 
@@ -39,11 +39,11 @@ def main(train_set, test_set, output_file, validate=False, k=5):
         (ids, test_features, _) = get_vector_from(f)
 
     if validate:
-        eval_clf = eval(executer_calls[0])
+        eval_clf = eval(executor_calls[0])
         cv = cross_validation.cross_val_score(eval_clf, train_features, classes, cv=k)
         print 'Accuracy: %f' % cv.mean
 
-    clf = eval(executer_calls[0])
+    clf = eval(executor_calls[0])
     clf.fit(train_features, classes)
 
     predictions = zip(ids, clf.predict(test_features))
