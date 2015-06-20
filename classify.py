@@ -3,6 +3,7 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
+
 from sklearn import cross_validation, svm, naive_bayes
 
 from utility.arfftoscikit import get_vector_from
