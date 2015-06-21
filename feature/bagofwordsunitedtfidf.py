@@ -7,7 +7,7 @@ from utility import tokenize
 
 
 class BagOfWordsUnitedTFIDF(FeatureExtractorI):
-    def __init__(self, train_sample, test_sample, ngram_size, normalization=False, progressbar=None):
+    def __init__(self, train_sample, test_sample, ngram_size, progressbar=None, normalization=False):
         self.idf = Counter()
         self.ngram_size = ngram_size
         for _, data, _ in train_sample:
