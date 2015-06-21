@@ -42,10 +42,13 @@ class ContainsTopicUnitedTFIDF(FeatureExtractorI):
 
         res = {key: 1 for key in topics}
 
+        """
         for x in res:
             res[x] /= float(len(topics))
+
             res[x] *= self.idf[x]
             if norm and self.normalization:
                 res[x] /= self.max_value
+        """
 
         return res
