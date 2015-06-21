@@ -1,11 +1,13 @@
 from argparse import ArgumentParser
 import csv
 import logging
+import numpy as np
 from os.path import join
 from os.path import dirname
 from sklearn import cross_validation, svm, naive_bayes
 from sklearn import ensemble
 from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.utils import multiclass
 
 from utility.arfftoscikit import get_vector_from
 
@@ -38,6 +40,7 @@ def do_not_call_it():
     naive_bayes.MultinomialNB()
     naive_bayes.GaussianNB()
     ensemble.RandomForestClassifier()
+    multiclass.OneVsRestClassifier(svm.SVC())
 
 
 def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=0):
@@ -84,6 +87,11 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
     """
     Normalization
     """
+
+    non_zero_indexes = train_features.nonzero()
+    for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+        if np.isnan(train_features[i, j]):
+            print "NANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
     # LOGGER.info('Normalizing...')
 
