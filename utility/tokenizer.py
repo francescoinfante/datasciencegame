@@ -25,7 +25,7 @@ def tokenize(data, ngram_size):
     for i in range(0, len(res) - ngram_size + 1):
         ngram = ''
         for j in range(0, ngram_size):
-            ngram += res[i + j]
-        final_result.append(ngram)
+            ngram += '_' + res[i + j]
+        final_result.append(ngram[1:])
 
     return final_result

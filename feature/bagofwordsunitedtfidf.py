@@ -1,5 +1,6 @@
 import math
 from collections import Counter
+import logging
 
 from feature.api import FeatureExtractorI
 from utility import tokenize
@@ -19,6 +20,10 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
 
         for key in self.idf:
             self.idf[key] = math.log(float(len(train_sample)) / self.idf[key], 2)
+
+        logging.info('BagOfWordsUnitedTFIDF init done')
+        logging.info('Total number of attributes ' + str(len(self.attributes)))
+        logging.info(self.idf)
 
         self.attributes = dict([(x, 'numeric') for x in self.idf])
 
