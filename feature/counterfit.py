@@ -4,7 +4,7 @@ from api import FeatureExtractorI
 class CounterFit(FeatureExtractorI):
     def __init__(self, train_sample, test_sample):
         maximums = {'viewCount': 1, 'likeCount': 1, 'dislikeCount': 1, 'favoriteCount': 1, 'commentCount': 1}
-        for instance in train_sample + test_sample:
+        for instance in train_sample[1] + test_sample[1]:
             maximums['viewCount'] = max(maximums['viewCount'], instance['viewCount'])
             maximums['likeCount'] = max(maximums['likeCount'], instance['likeCount'])
             maximums['dislikeCount'] = max(maximums['dislikeCount'], instance['dislikeCount'])
