@@ -25,7 +25,7 @@ def get_vector_from(arff_file_stream):
             try:
                 features_types.append(line.split(' ')[2])
             except:
-                print int(i) + ') ' + line
+                print str(i) + ') ' + line
             continue
         instances.append(line[1:-1])
         i += 1
