@@ -26,8 +26,6 @@ class BeautifulTopic(FeatureExtractorI):
                 self.attributes[type] = 'numeric'
                 progressbar.update(progressbar_counter.next())
 
-        print self.attributes
-
         logging.warn('End ProgressBar Init BeautifulTopic')
         logging.warn('Tot attributes ' + str(len(self.attributes)))
 
