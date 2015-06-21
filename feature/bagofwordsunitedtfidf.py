@@ -7,7 +7,7 @@ from utility import tokenize
 
 
 class BagOfWordsUnitedTFIDF(FeatureExtractorI):
-    def __init__(self, train_sample, test_sample, ngram_size, progressbar=None):
+    def __init__(self, train_sample, test_sample, ngram_size, normalization=False, progressbar=None):
         self.idf = Counter()
         self.ngram_size = ngram_size
         for _, data, _ in train_sample:
@@ -26,17 +26,18 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
         logging.info(self.idf)
 
         self.attributes = dict([(x, 'numeric') for x in self.idf])
+        self.normalization = normalization
+        if normalization:
+            self.max_value = 0.0
 
-        self.max_value = 0.0
+            logging.info('Computing max value')
 
-        logging.info('Computing max value')
+            for _, data, _ in train_sample + test_sample:
+                result = self.extract(data, norm=False)
+                for _, val in result.iteritems():
+                    self.max_value = max(self.max_value, val)
 
-        for _, data, _ in train_sample + test_sample:
-            result = self.extract(data, norm=False)
-            for _, val in result.iteritems():
-                self.max_value = max(self.max_value, val)
-
-        logging.info('max value: ' + str(self.max_value))
+            logging.info('max value: ' + str(self.max_value))
 
     def extract(self, data, norm=True):
         tokens = tokenize(data['title'] + ' ' + data['description'], self.ngram_size)
@@ -48,7 +49,7 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
         for x in count:
             count[x] /= float(len(tokens))
             count[x] *= self.idf[x]
-            if norm:
+            if norm and self.normalization:
                 count[x] /= self.max_value
 
         return dict(count)
