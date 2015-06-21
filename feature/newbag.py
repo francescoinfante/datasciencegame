@@ -16,7 +16,7 @@ class NewBag(FeatureExtractorI):
     def extract(self, data):
         tokens = []
 
-        for attr in self.attributes:
+        for attr in self.list_of_attributes:
             tokens.extend(tokenize(data[attr], self.ngram_size))
 
         return {key: 1 for key in tokens}
