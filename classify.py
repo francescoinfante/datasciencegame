@@ -3,8 +3,8 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-
 from sklearn import cross_validation, svm, naive_bayes
+import sklearn
 from sklearn.feature_selection import SelectKBest, chi2
 
 from utility.arfftoscikit import get_vector_from
@@ -37,6 +37,7 @@ def do_not_call_it():
     svm.LinearSVC()
     naive_bayes.MultinomialNB()
     naive_bayes.GaussianNB()
+    sklearn.ensemble.RandomForestClassifier()
 
 
 def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=0):
@@ -84,7 +85,7 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
     Normalization
     """
 
-    LOGGER.info('Normalizing...')
+    # LOGGER.info('Normalizing...')
 
     # one_hot_encoder = preprocessing.OneHotEncoder(categorical_features=[x[0] == '{' for x in features_types])
     # one_hot_encoder.fit(train_features)
