@@ -4,7 +4,7 @@ import logging
 from os.path import join
 from os.path import dirname
 from sklearn import cross_validation, svm, naive_bayes
-import sklearn
+from sklearn import ensemble
 from sklearn.feature_selection import SelectKBest, chi2
 
 from utility.arfftoscikit import get_vector_from
@@ -37,7 +37,7 @@ def do_not_call_it():
     svm.LinearSVC()
     naive_bayes.MultinomialNB()
     naive_bayes.GaussianNB()
-    sklearn.ensemble.RandomForestClassifier()
+    ensemble.RandomForestClassifier()
 
 
 def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=0):
