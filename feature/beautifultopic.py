@@ -20,7 +20,7 @@ class BeautifulTopic(FeatureExtractorI):
                 l = line.split(',')
                 mid = l[0][2:]
                 type = l[1].strip()
-                type.split('.')
+                type = type.split('.')
                 type = type[0]
                 self.cache[mid] = type
                 self.attributes[type] = 'numeric'
