@@ -8,7 +8,7 @@ stopwords_en = stopwords.words('english')
 stemmer = SnowballStemmer('english')
 
 
-def tokenize(data):
+def tokenize(data, ngram_size):
     data = unidecode(data).strip().lower()
 
     data = RegexpTokenizer('\w+').tokenize(data)
