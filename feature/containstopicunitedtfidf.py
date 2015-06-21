@@ -18,11 +18,11 @@ class ContainsTopicUnitedTFIDF(FeatureExtractorI):
             self.idf[key] = math.log(float(len(train_sample)) / self.cnt[key], 2)
 
         self.attributes = dict([(x, 'numeric') for x in self.idf])
-
+        """
         logging.info('ContainsTopicUnitedTFIDF init done')
         logging.info('Total number of attributes ' + str(len(self.idf)))
         logging.info(self.idf)
-
+        """
         self.normalization = normalization
         if normalization:
             self.max_value = 0.0
