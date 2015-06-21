@@ -29,11 +29,40 @@ if __name__ == '__main__':
                            help='test output file (arff sparse format)')
     argparser.add_argument('-c', '--configuration', default=DEFAULT_CONFIGURATION,
                            help='configuration file')
+    argparser.add_argument('-l', '--last-run', action='store_true', default=False,
+                           help='last execution')
     args = argparser.parse_args()
 
     possible_categories = set()
     train_sample = []  # list of tuples: '0', 'dict', 'category'
     test_sample = []  # list of tuples: 'test_id', 'dict', 'random_category'
+
+    """
+    Test Sample CSV header
+
+    "id","title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
+    "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
+    """
+
+    row_count = 2
+
+    with open(args.test_input, 'r') as f:
+        f.next()
+        csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
+        progressbar = ProgressBar(maxval=116000).start()
+        for row in csv_reader:
+            test_id = row[0]
+            try:
+                test_sample.append((test_id, array_to_dict(row_count, row[1:]), random.choice(list(possible_categories))))
+            except Exception as e:
+                logging.warn('Warning from test set')
+                logging.warn(e)
+            progressbar.update(row_count)
+            row_count += 1
+        progressbar.finish()
+
+    logging.info('Test sample has been read!')
+
 
     """
     Train Sample CSV header
@@ -61,33 +90,6 @@ if __name__ == '__main__':
         progressbar.finish()
 
     logging.info('Train sample has been read!')
-
-    """
-    Test Sample CSV header
-
-    "id","title","description","published_at","viewCount","likeCount","dislikeCount","favoriteCount",
-    "commentCount","duration","dimension","definition","caption","licensedContent","topicIds","relevantTopicIds"
-    """
-
-    row_count = 2
-
-    with open(args.test_input, 'r') as f:
-        f.next()
-        csv_reader = unicodecsv.reader(f, delimiter=',', quotechar='"', escapechar='\\', encoding='utf-8')
-        progressbar = ProgressBar(maxval=116000).start()
-        for row in csv_reader:
-            test_id = row[0]
-            try:
-                test_sample.append(
-                    (test_id, array_to_dict(row_count, row[1:]), random.choice(list(possible_categories))))
-            except Exception as e:
-                logging.warn('Warning from test set')
-                logging.warn(e)
-            progressbar.update(row_count)
-            row_count += 1
-        progressbar.finish()
-
-    logging.info('Test sample has been read!')
 
     """
     Call init for each plugin in the configuration file
@@ -123,11 +125,12 @@ if __name__ == '__main__':
     Build actual arff files
     """
 
-    train_data = feature.extract_features(plugins, train_sample)
+    if not args.last_run:
+        train_data = feature.extract_features(plugins, train_sample)
 
-    arff_sparse_builder(args.training_output, 'train_set', attributes, train_data)
+        arff_sparse_builder(args.training_output, 'train_set', attributes, train_data)
 
-    logging.info(args.training_output + ' is ready!')
+        logging.info(args.training_output + ' is ready!')
 
     test_data = feature.extract_features(plugins, test_sample)
     arff_sparse_builder(args.test_output, 'test_set', attributes, test_data)

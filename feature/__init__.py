@@ -23,6 +23,7 @@ from language import LangID
 from publisheddate import PublishedDate
 from publisheddatecyclic import PublishedDateCyclic
 from rangeclassify import RangeClassify
+from hourofday import HourOfDate
 
 
 def extract_features(plugins, sample):
