@@ -45,11 +45,11 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
 
         for x in tokens:
             count[x] += 1
-
+        """
         for x in count:
             count[x] /= float(len(tokens))
             count[x] *= self.idf[x]
             if norm and self.normalization:
                 count[x] /= self.max_value
-
+        """
         return dict(count)
