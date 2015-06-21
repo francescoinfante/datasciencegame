@@ -13,23 +13,22 @@ class BeautifulTopic(FeatureExtractorI):
 
         progressbar, progressbar_counter = ProgressBar(maxval=221657151).start(), count(1)
 
-        logging.warn('ProgressBar Init BeautifulTopic')
+        logging.info('ProgressBar Init BeautifulTopic')
 
         with open('/home/data-dsg/type.csv', 'r') as f:
             for line in f:
                 l = line.split(',')
                 mid = l[0][2:]
                 type = l[1].strip()
-                type.split('.')
+                type = type.split('.')
                 type = type[0]
                 self.cache[mid] = type
                 self.attributes[type] = 'numeric'
                 progressbar.update(progressbar_counter.next())
 
-        print self.attributes
-
-        logging.warn('End ProgressBar Init BeautifulTopic')
-        logging.warn('Tot attributes ' + str(len(self.attributes)))
+        logging.info('End ProgressBar Init BeautifulTopic')
+        logging.info('Tot attributes ' + str(len(self.attributes)))
+        logging.info(self.attributes)
 
     def extract(self, data):
         topics = data['topicIds'] | data['relevantTopicIds']
