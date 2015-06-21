@@ -58,4 +58,4 @@ def get_vector_from(arff_file_stream):
 
         i += 1
 
-    return np.array(ids), matrix, np.array(classes), features_names, features_types
+    return np.array(ids), matrix.tocsr(), np.array(classes), features_names, features_types
