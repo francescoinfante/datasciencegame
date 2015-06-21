@@ -12,7 +12,6 @@ def tokenize(data, ngram_size):
     data = unidecode(data).strip().lower()
 
     data = RegexpTokenizer('\w+').tokenize(data)
-
     res = []
 
     for x in data:
@@ -21,4 +20,12 @@ def tokenize(data, ngram_size):
             if len(stemmed) >= 3:
                 res.append(stemmed)
 
-    return res
+    final_result = []
+
+    for i in range(0, len(res) - ngram_size + 1):
+        ngram = ''
+        for j in range(0, ngram_size):
+            ngram += res[i + j]
+        final_result.append(ngram)
+
+    return final_result
