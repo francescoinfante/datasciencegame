@@ -6,9 +6,9 @@ from utility import tokenize
 
 
 class BagOfWordsUnitedTFIDF(FeatureExtractorI):
-    def __init__(self, train_sample, progressbar=None):
+    def __init__(self, train_sample, ngram_size, progressbar=None):
         self.idf = Counter()
-
+        self.ngram_size = ngram_size
         for _, data, _ in train_sample:
             tmp_set = set()
             for token in tokenize(data['title'] + ' ' + data['description']):
@@ -23,7 +23,7 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
         self.attributes = dict([(x, 'numeric') for x in self.idf])
 
     def extract(self, data):
-        tokens = tokenize(data['title'] + ' ' + data['description'])
+        tokens = tokenize(data['title'] + ' ' + data['description'], self.ngram_size)
         count = Counter()
 
         for x in tokens:
