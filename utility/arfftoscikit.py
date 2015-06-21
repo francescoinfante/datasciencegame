@@ -25,6 +25,9 @@ def get_vector_from(arff_file_stream):
             continue
         instances.append(line[1:-1])
 
+    features_names = features_names[1:-1]
+    features_types = features_types[1:-1]
+
     shape = (len(instances), num_of_attributes - 2)
     matrix = sps.dok_matrix(shape)
 
