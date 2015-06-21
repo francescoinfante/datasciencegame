@@ -1,14 +1,15 @@
 from argparse import ArgumentParser
 import csv
 import logging
-import numpy as np
 from os.path import join
 from os.path import dirname
 from sklearn import cross_validation, svm, naive_bayes
 from sklearn import ensemble
 from sklearn.feature_selection import SelectKBest, chi2
-from sklearn.utils import multiclass
+from sklearn.metrics import precision_recall_curve, average_precision_score
+from sklearn.multiclass import OneVsRestClassifier
 
+import matplotlib.pyplot as plt
 from utility.arfftoscikit import get_vector_from
 
 DEFAULT_OUTPUT = join(dirname(__file__), 'output/result-scikit.csv')
@@ -35,12 +36,56 @@ LOGGER.setLevel(logging.INFO)
 #             x[i, j] /= maximums[j]
 
 
+def analyse(classes, y_test, y_score):
+    # Compute Precision-Recall and plot curve
+    precision = dict()
+    recall = dict()
+    average_precision = dict()
+    for i in range(classes):
+        precision[i], recall[i], _ = precision_recall_curve(y_test[:, i],
+                                                            y_score[:, i])
+        average_precision[i] = average_precision_score(y_test[:, i], y_score[:, i])
+
+    # Compute micro-average ROC curve and ROC area
+    precision["micro"], recall["micro"], _ = precision_recall_curve(y_test.ravel(), y_score.ravel())
+    average_precision["micro"] = average_precision_score(y_test, y_score)
+
+    # Plot Precision-Recall curve
+    plt.clf()
+    plt.plot(recall[0], precision[0], label='Precision-Recall curve')
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.ylim([0.0, 1.05])
+    plt.xlim([0.0, 1.0])
+    plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision[0]))
+    plt.legend(loc="lower left")
+    plt.show()
+
+    # Plot Precision-Recall curve for each class
+    plt.clf()
+    plt.plot(recall["micro"], precision["micro"],
+             label='micro-average Precision-recall curve (area = {0:0.2f})'
+                   ''.format(average_precision["micro"]))
+    for i in range(classes):
+        plt.plot(recall[i], precision[i],
+                 label='Precision-recall curve of class {0} (area = {1:0.2f})'
+                       ''.format(i, average_precision[i]))
+
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.title('Extension of Precision-Recall curve to multi-class')
+    plt.legend(loc="lower right")
+    plt.show()
+
+
 def do_not_call_it():
     svm.LinearSVC()
     naive_bayes.MultinomialNB()
     naive_bayes.GaussianNB()
     ensemble.RandomForestClassifier()
-    multiclass.OneVsRestClassifier(svm.SVC())
+    OneVsRestClassifier(svm.SVC())
 
 
 def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=0):
@@ -88,10 +133,10 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
     Normalization
     """
 
-    non_zero_indexes = train_features.nonzero()
-    for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
-        if np.isnan(train_features[i, j]):
-            print "NANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    # non_zero_indexes = train_features.nonzero()
+    # for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+    #     if np.isnan(train_features[i, j]):
+    #         print "NANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
     # LOGGER.info('Normalizing...')
 
@@ -139,6 +184,7 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
         eval_clf = eval(executor_calls[0])
         cv = cross_validation.cross_val_score(eval_clf, train_features, classes, cv=k)
         print 'Accuracy: %f' % cv.mean()
+        # analyse(classes,)
 
     """
     Training
