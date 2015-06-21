@@ -11,7 +11,7 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
         self.ngram_size = ngram_size
         for _, data, _ in train_sample:
             tmp_set = set()
-            for token in tokenize(data['title'] + ' ' + data['description']):
+            for token in tokenize(data['title'] + ' ' + data['description'], self.ngram_size):
                 tmp_set.add(len(token))
             for token in tmp_set:
                 self.idf[token] += 1
