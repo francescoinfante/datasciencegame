@@ -7,8 +7,8 @@ class NewTopic(FeatureExtractorI):
         self.list_of_attributes = list_of_attributes
         for _, data, _ in train_sample:
             for attr in self.list_of_attributes:
-                for key in data[attr]:
-                    self.feat_set.add(key)
+                for topic in data[attr]:
+                    self.feat_set.add(topic)
             progressbar.update(progressbar.currval + 1)
 
         self.attributes = dict([(x, 'numeric') for x in self.feat_set])
