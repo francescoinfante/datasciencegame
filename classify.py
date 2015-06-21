@@ -59,11 +59,11 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
 
     LOGGER.info('Reading training set...')
     with open(train_set, 'r') as f:
-        (_, train_features, classes, features_names) = get_vector_from(f)
+        (_, train_features, classes, features_names, _) = get_vector_from(f)
 
     LOGGER.info('Reading test set...')
     with open(test_set, 'r') as f:
-        (ids, test_features, _, _) = get_vector_from(f)
+        (ids, test_features, _, _, _) = get_vector_from(f)
 
     """
     Feature selection
