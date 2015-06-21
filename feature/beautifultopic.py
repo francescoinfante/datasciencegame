@@ -33,8 +33,5 @@ class BeautifulTopic(FeatureExtractorI):
         for x in topics:
             if x[3:] in self.cache:
                 result[self.cache[x[3:]]] = 1
-                print "ok!"
-            else:
-                print "Missing topic: " + str(x[2:])
 
         return result
