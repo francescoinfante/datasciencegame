@@ -9,7 +9,7 @@ stemmer = SnowballStemmer('english')
 
 
 def tokenize(data, ngram_size):
-    data = unidecode(data).strip().lower()
+    data = unidecode(data).lower()
 
     data = RegexpTokenizer('\w+').tokenize(data)
     res = []
@@ -17,7 +17,7 @@ def tokenize(data, ngram_size):
     for x in data:
         if x not in stopwords_en and x.isalpha():
             stemmed = stemmer.stem(x)
-            if len(stemmed) >= 3:
+            if len(stemmed) >= 2:
                 res.append(stemmed)
 
     final_result = []
