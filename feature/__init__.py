@@ -2,6 +2,8 @@ from itertools import count
 
 from progressbar import ProgressBar
 
+from newbag import NewBag
+from newtopic import NewTopic
 from bagofwordsofdescription import BagOfWordsOfDescription
 from bagofwordsoftitle import BagOfWordsOfTitle
 from bagofwordsunited import BagOfWordsUnited
