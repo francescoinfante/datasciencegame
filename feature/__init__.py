@@ -10,6 +10,7 @@ from bagofwordsunitedtfidf import BagOfWordsUnitedTFIDF
 from containsrelevanttopic import ContainsRelevantTopic
 from containstopic import ContainsTopic
 from containstopicunited import ContainsTopicUnited
+from containstopicunitedtfidf import ContainsTopicUnitedTFIDF
 from counterfit import CounterFit
 from exactduration import ExactDuration
 from hascaption import HasCaption
