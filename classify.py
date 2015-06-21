@@ -18,18 +18,18 @@ LOGGER = logging.getLogger('Classify')
 LOGGER.setLevel(logging.INFO)
 
 
-def compute_max(x, maximums, features_types):
-    non_zero_indexes = x.nonzero()
-    for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
-        if features_types == 'numeric':
-            maximums[j] = max(x[i, j], maximums[j])
-
-
-def normalize(x, maximums, features_types):
-    non_zero_indexes = x.nonzero()
-    for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
-        if features_types == 'numeric':
-            x[i, j] /= maximums[j]
+# def compute_max(x, maximums, features_types):
+#     non_zero_indexes = x.nonzero()
+#     for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+#         if features_types == 'numeric':
+#             maximums[j] = max(x[i, j], maximums[j])
+#
+#
+# def normalize(x, maximums, features_types):
+#     non_zero_indexes = x.nonzero()
+#     for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+#         if features_types == 'numeric':
+#             x[i, j] /= maximums[j]
 
 
 def do_not_call_it():
@@ -90,11 +90,11 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
     # train_features = one_hot_encoder.transform(train_features)
     # test_features = one_hot_encoder.transform(test_features)
 
-    maximums = [1] * len(features_names)
-    compute_max(train_features, maximums, features_types)
-    compute_max(test_features, maximums, features_types)
-    normalize(train_features, maximums, features_types)
-    normalize(test_features, maximums, features_types)
+    # maximums = [1] * len(features_names)
+    # compute_max(train_features, maximums, features_types)
+    # compute_max(test_features, maximums, features_types)
+    # normalize(train_features, maximums, features_types)
+    # normalize(test_features, maximums, features_types)
 
     # dense_train_features = train_features.toarray()
     # dense_test_features = test_features.toarray()
