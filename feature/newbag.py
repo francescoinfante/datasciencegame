@@ -14,7 +14,7 @@ class NewBag(FeatureExtractorI):
                 for token in tokenize(data[attr], self.ngram_size):
                     self.count[token] += 1
             progressbar.update(progressbar.currval + 1)
-        self.attributes = {key: 'numeric' for key, value in self.count if value >= min_frequency}
+        self.attributes = {key: 'numeric' for key, value in self.count.iteritems() if value >= min_frequency}
 
     def extract(self, data):
         tokens = []

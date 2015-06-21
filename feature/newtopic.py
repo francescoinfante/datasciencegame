@@ -12,7 +12,7 @@ class NewTopic(FeatureExtractorI):
                 for topic in data[attr]:
                     self.count[topic] += 1
             progressbar.update(progressbar.currval + 1)
-        self.attributes = {key: 'numeric' for key, value in self.count if value >= min_frequency}
+        self.attributes = {key: 'numeric' for key, value in self.count.iteritems() if value >= min_frequency}
 
     def extract(self, data):
         topics = []
