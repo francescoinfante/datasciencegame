@@ -5,8 +5,8 @@ from progressbar import ProgressBar
 from bagofwordsofdescription import BagOfWordsOfDescription
 from bagofwordsoftitle import BagOfWordsOfTitle
 from bagofwordsunited import BagOfWordsUnited
-from beautifultopic import BeautifulTopic
 from bagofwordsunitedtfidf import BagOfWordsUnitedTFIDF
+from beautifultopic import BeautifulTopic
 from containsrelevanttopic import ContainsRelevantTopic
 from containstopic import ContainsTopic
 from containstopicunited import ContainsTopicUnited
@@ -19,8 +19,8 @@ from ishd import IsHD
 from islicensed import IsLicensed
 from language import LangID
 from publisheddate import PublishedDate
-from rangeclassify import RangeClassify
 from publisheddatecyclic import PublishedDateCyclic
+from rangeclassify import RangeClassify
 
 
 def extract_features(plugins, sample):
