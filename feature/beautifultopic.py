@@ -22,6 +22,8 @@ class BeautifulTopic(FeatureExtractorI):
                 type = l[1].strip()
                 type = type.split('.')
                 type = type[0]
+                if len(type) > 1:
+                    type += '_' + type[1]
                 self.cache[mid] = type
                 self.attributes[type] = 'numeric'
                 progressbar.update(progressbar_counter.next())
