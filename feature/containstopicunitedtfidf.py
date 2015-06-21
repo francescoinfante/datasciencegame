@@ -5,7 +5,7 @@ from api import FeatureExtractorI
 
 
 class ContainsTopicUnitedTFIDF(FeatureExtractorI):
-    def __init__(self, train_sample, at_most=1000):
+    def __init__(self, train_sample):
         cnt = Counter()
         for (_, given_features, _) in train_sample:
             for key in given_features['topicIds'] | given_features['relevantTopicIds']:
@@ -16,7 +16,7 @@ class ContainsTopicUnitedTFIDF(FeatureExtractorI):
         for key in self.cnt:
             self.idf[key] = math.log(float(len(train_sample)) / self.cnt[key], 2)
 
-        self.attributes = {key: 'numeric' for (key, _) in cnt.most_common(at_most)}
+        self.attributes = {key: 'numeric' for (key, _) in cnt}
 
     def extract(self, data):
 
