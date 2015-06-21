@@ -15,5 +15,4 @@ class LangID(FeatureExtractorI):
 
     def extract(self, data):
         language = langid.classify(data['title'] + ' ' + data['description'])[0]
-        print language
         return {language: 1}

@@ -7,10 +7,10 @@ from api import FeatureExtractorI
 
 class ContainsTopicUnitedTFIDF(FeatureExtractorI):
     def __init__(self, train_sample, test_sample, normalization=False):
-        cnt = Counter()
+        self.cnt = Counter()
         for (_, given_features, _) in train_sample:
             for key in given_features['topicIds'] | given_features['relevantTopicIds']:
-                cnt[key] += 1
+                self.cnt[key] += 1
 
         self.idf = Counter()
 
