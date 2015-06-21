@@ -13,7 +13,7 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
         for _, data, _ in train_sample:
             tmp_set = set()
             for token in tokenize(data['title'] + ' ' + data['description'], self.ngram_size):
-                tmp_set.add(len(token))
+                tmp_set.add(token)
             for token in tmp_set:
                 self.idf[token] += 1
             progressbar.update(progressbar.currval + 1)
