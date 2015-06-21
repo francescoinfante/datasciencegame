@@ -40,7 +40,7 @@ class ContainsTopicUnitedTFIDF(FeatureExtractorI):
 
         topics = data['topicIds'] | data['relevantTopicIds']
 
-        res = {key: '1' for key in topics}
+        res = {key: 1 for key in topics}
 
         for x in res:
             res[x] /= float(len(topics))
