@@ -32,12 +32,12 @@ def get_vector_from(arff_file_stream):
     nominal_mappings = {}
     nominal_counter = Counter()
     for instance in instances:
-        v = [(int(j) - 1, value) for (j, value) in map(lambda x: x.split(' '), instance.split(','))]
+        v = [(int(j) - 1, value) for (j, value) in sorted(map(lambda x: x.split(' '), instance.split(',')))]
         ids.append(int(v[0][1]))
         cur_class = v[-1][1]
         classes.append(int(cur_class))
         # FIXME missing one attribute, 'id' included instead
-        for (j, value) in v[0:-1]:
+        for (j, value) in v[1:-1]:
             if value.isdigit():
                 matrix[(i, j)] = int(value)
             else:
