@@ -22,7 +22,7 @@ class BagOfWordsUnitedTFIDF(FeatureExtractorI):
             self.idf[key] = math.log(float(len(train_sample)) / self.idf[key], 2)
 
         logging.info('BagOfWordsUnitedTFIDF init done')
-        logging.info('Total number of attributes ' + str(len(self.attributes)))
+        logging.info('Total number of attributes ' + str(len(self.idf)))
         logging.info(self.idf)
 
         self.attributes = dict([(x, 'numeric') for x in self.idf])
