@@ -9,8 +9,10 @@ class LangID(FeatureExtractorI):
         for x in sample:
             language = langid.classify(sample['title'] + ' ' + sample['description'])[0]
             type.append(language)
-        self.attributes = {'lang': '{' + ','.join(type) + '}'}
+        self.attributes = {}
+        for x in type:
+            self.attributes[x] = 'numeric'
 
     def extract(self, data):
         language = langid.classify(data['title'] + ' ' + data['description'])[0]
-        return {'lang': language}
+        return {language: 1}
