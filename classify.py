@@ -3,7 +3,7 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-from sklearn import cross_validation, svm, naive_bayes
+from sklearn import cross_validation, svm, naive_bayes, preprocessing
 from sklearn.feature_selection import SelectKBest, chi2
 
 from utility.arfftoscikit import get_vector_from
@@ -59,11 +59,26 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
 
     LOGGER.info('Reading training set...')
     with open(train_set, 'r') as f:
-        (_, train_features, classes, features_names, _) = get_vector_from(f)
+        (_, train_features, classes, features_names, features_types) = get_vector_from(f)
 
     LOGGER.info('Reading test set...')
     with open(test_set, 'r') as f:
         (ids, test_features, _, _, _) = get_vector_from(f)
+
+    """
+    Pre-processing
+    """
+
+    print len(features_types)
+    print len(train_features)
+    one_hot_encoder = preprocessing.OneHotEncoder(categorical_features=[x[0] == '{' for x in features_types])
+    one_hot_encoder.fit(train_features)
+    train_features = one_hot_encoder.transform(train_features)
+    test_features = one_hot_encoder.transform(test_features)
+
+    # normalizer = preprocessing.Normalizer().fit(train_features)
+    # train_features = normalizer.transorm(train_features)
+    # test_features = normalizer.transorm(test_features)
 
     """
     Feature selection

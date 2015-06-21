@@ -1,4 +1,5 @@
 from collections import Counter
+import logging
 import scipy.sparse as sps
 import numpy as np
 
@@ -14,6 +15,7 @@ def get_vector_from(arff_file_stream):
     instances = []
     features_names = []
     features_types = []
+    i = 0
     for line in arff_file_stream:
         line = line.strip().lower()
         if line == '' or '@data' in line or '@relation' in line:
@@ -21,9 +23,13 @@ def get_vector_from(arff_file_stream):
         if '@attribute' in line:
             num_of_attributes += 1
             features_names.append(line.split(' ')[1])
-            features_types.append(line.split(' ')[2])
+            try:
+                features_types.append(line.split(' ')[2])
+            except:
+                logging.error('Line %d is ill-formed: %s' % (i, line))
             continue
         instances.append(line[1:-1])
+        i += 1
 
     features_names = features_names[1:-1]
     features_types = features_types[1:-1]
