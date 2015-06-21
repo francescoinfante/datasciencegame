@@ -3,8 +3,7 @@ import csv
 import logging
 from os.path import join
 from os.path import dirname
-
-from sklearn import cross_validation, svm, naive_bayes, preprocessing
+from sklearn import cross_validation, svm, naive_bayes
 from sklearn.feature_selection import SelectKBest, chi2
 
 from utility.arfftoscikit import get_vector_from
@@ -17,6 +16,20 @@ DEFAULT_FEATURES_RANKING = join(dirname(__file__), 'output/features_ranking.csv'
 logging.basicConfig()
 LOGGER = logging.getLogger('Classify')
 LOGGER.setLevel(logging.INFO)
+
+
+# def compute_max(x, maximums, features_types):
+#     non_zero_indexes = x.nonzero()
+#     for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+#         if features_types == 'numeric':
+#             maximums[j] = max(x[i, j], maximums[j])
+#
+#
+# def normalize(x, maximums, features_types):
+#     non_zero_indexes = x.nonzero()
+#     for (i, j) in zip(non_zero_indexes[0], non_zero_indexes[1]):
+#         if features_types == 'numeric':
+#             x[i, j] /= maximums[j]
 
 
 def do_not_call_it():
@@ -67,16 +80,27 @@ def main(train_set, test_set, output_file, validate=False, k=5, num_of_features=
         (ids, test_features, _, _, _) = get_vector_from(f)
 
     """
-    Pre-processing
+    Normalization
     """
 
-    print len(features_types)
-    print len(train_features)
-    one_hot_encoder = preprocessing.OneHotEncoder(categorical_features=[x[0] == '{' for x in features_types])
-    one_hot_encoder.fit(train_features)
-    train_features = one_hot_encoder.transform(train_features)
-    test_features = one_hot_encoder.transform(test_features)
+    LOGGER.info('Normalizing...')
 
+    # one_hot_encoder = preprocessing.OneHotEncoder(categorical_features=[x[0] == '{' for x in features_types])
+    # one_hot_encoder.fit(train_features)
+    # train_features = one_hot_encoder.transform(train_features)
+    # test_features = one_hot_encoder.transform(test_features)
+
+    # maximums = [1] * len(features_names)
+    # compute_max(train_features, maximums, features_types)
+    # compute_max(test_features, maximums, features_types)
+    # normalize(train_features, maximums, features_types)
+    # normalize(test_features, maximums, features_types)
+
+    # dense_train_features = train_features.toarray()
+    # dense_test_features = test_features.toarray()
+    # scaler = preprocessing.MinMaxScaler().fit(dense_train_features)
+    # scaler.transform(dense_train_features)
+    # scaler.transform(dense_test_features)
     # normalizer = preprocessing.Normalizer().fit(train_features)
     # train_features = normalizer.transorm(train_features)
     # test_features = normalizer.transorm(test_features)
