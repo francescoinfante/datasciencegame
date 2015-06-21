@@ -1,4 +1,5 @@
 from collections import Counter
+import logging
 import scipy.sparse as sps
 import numpy as np
 
@@ -25,7 +26,7 @@ def get_vector_from(arff_file_stream):
             try:
                 features_types.append(line.split(' ')[2])
             except:
-                print str(i) + ') ' + line
+                logging.error('Line %d is ill-formed: %s' % (i, line))
             continue
         instances.append(line[1:-1])
         i += 1
